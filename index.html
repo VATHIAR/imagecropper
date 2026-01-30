@@ -10,7 +10,7 @@
     <meta name="keywords" content="image resizer, size reduce, crop image, passport photo maker, compress jpeg, online photo editor">
     <meta name="robots" content="index, follow">
     
-    <!-- SEO: Open Graph (Social Sharing) -->
+    <!-- SEO: Open Graph -->
     <meta property="og:title" content="Document Photo Cropper - Resize & Compress">
     <meta property="og:description" content="Securely crop and resize your photos directly in your browser. No signup required.">
     <meta property="og:type" content="website">
@@ -21,7 +21,7 @@
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     
-    <!-- Structured Data (JSON-LD) for SEO -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -31,12 +31,8 @@
           "name": "Document Photo Cropper",
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "Web Browser",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          },
-          "featureList": "Image cropping, Resizing, Compression, Rotation"
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "featureList": "Image cropping, Resizing, Compression, Rotation, B&W Filter"
         },
         {
           "@type": "HowTo",
@@ -45,7 +41,7 @@
             { "@type": "HowToStep", "text": "Upload your image file." },
             { "@type": "HowToStep", "text": "Rotate and crop the image to center the subject." },
             { "@type": "HowToStep", "text": "Enter target width and height in pixels." },
-            { "@type": "HowToStep", "text": "Set maximum file size in KB for compression." },
+            { "@type": "HowToStep", "text": "Select B&W if needed and set file size limit." },
             { "@type": "HowToStep", "text": "Click Crop & Download." }
           ]
         }
@@ -54,7 +50,7 @@
     </script>
 
     <style>
-        /* CSS Variables for Theme Management */
+        /* CSS Variables */
         :root {
             --bg-color: #f4f4f9;
             --container-bg: #ffffff;
@@ -64,6 +60,8 @@
             --input-bg: #ffffff;
             --primary-color: #007bff;
             --primary-hover: #0056b3;
+            --secondary-bg: #6c757d;
+            --secondary-hover: #5a6268;
             --control-group-bg: #f9f9f9;
         }
 
@@ -77,6 +75,8 @@
             --input-bg: #3d3d3d;
             --primary-color: #4da3ff;
             --primary-hover: #2b82df;
+            --secondary-bg: #555;
+            --secondary-hover: #777;
             --control-group-bg: #363636;
         }
 
@@ -89,9 +89,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- ANIMATIONS --- */
-        
-        /* Attention Wiggle Animation */
+        /* Animations */
         @keyframes wiggle {
             0% { transform: rotate(0deg); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
             10% { transform: rotate(-15deg); }
@@ -101,15 +99,13 @@
             50% { transform: rotate(0deg); box-shadow: 0 0 15px var(--primary-color); }
             100% { transform: rotate(0deg); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         }
-
-        /* Click Spin Animation */
         @keyframes spin {
             0% { transform: scale(1) rotate(0deg); }
             50% { transform: scale(0.8) rotate(180deg); }
             100% { transform: scale(1) rotate(360deg); }
         }
 
-        /* Theme Toggle Button */
+        /* Theme Toggle */
         .theme-toggle {
             position: absolute;
             top: 20px;
@@ -130,16 +126,8 @@
             font-size: 1.2rem;
             transition: background-color 0.3s, border-color 0.3s;
         }
-
-        /* Animation Classes */
-        .theme-toggle.attention {
-            animation: wiggle 2s ease-in-out infinite;
-            border-color: var(--primary-color);
-        }
-
-        .theme-toggle.clicked {
-            animation: spin 0.5s ease-in-out;
-        }
+        .theme-toggle.attention { animation: wiggle 2s ease-in-out infinite; border-color: var(--primary-color); }
+        .theme-toggle.clicked { animation: spin 0.5s ease-in-out; }
 
         .container {
             max-width: 1000px;
@@ -154,56 +142,8 @@
             transition: background-color 0.3s;
         }
 
-        /* --- SEO & Blog Styles --- */
-        .seo-section {
-            max-width: 1000px;
-            margin: 30px auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-
-        .seo-content {
-            background: var(--container-bg);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            line-height: 1.6;
-            color: var(--text-secondary);
-        }
-
-        .seo-content h1 { font-size: 1.6rem; color: var(--primary-color); margin-top: 0; }
-        .seo-content h2 { font-size: 1.3rem; margin-top: 20px; color: var(--text-color); }
-        .seo-content p, .seo-content ul { font-size: 0.95rem; }
-        .seo-content strong { color: var(--text-color); }
-        .seo-content li { margin-bottom: 8px; }
-
-        .blog-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .blog-card {
-            background: var(--container-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-        .blog-card:hover { transform: translateY(-2px); }
-        .blog-card h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
-        .blog-card a { text-decoration: none; color: var(--text-color); }
-        .blog-card a:hover { color: var(--primary-color); }
-        .blog-meta { font-size: 0.8rem; color: var(--text-secondary); opacity: 0.8; display: block; margin-top: 5px; }
-
-        @media (max-width: 768px) {
-            .seo-section { grid-template-columns: 1fr; }
-        }
-
-        /* --- App Styles --- */
+        /* App Styles */
         h2.app-title { margin-top: 0; margin-bottom: 5px; width: 100%; color: var(--text-color); }
-        
         .privacy-note {
             width: 100%;
             margin-top: 0;
@@ -218,7 +158,7 @@
         .editor-area {
             flex: 2;
             min-width: 300px;
-            background: #222; /* Always dark for image contrast */
+            background: #222;
             height: 550px;
             border-radius: 4px;
             overflow: hidden;
@@ -227,9 +167,14 @@
             justify-content: center;
             position: relative;
         }
-
         #image { max-width: 100%; display: block; }
         .placeholder-text { color: #aaa; }
+
+        /* Realtime Grayscale Class */
+        .cropper-container.grayscale-filter {
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
 
         .controls-area {
             flex: 1;
@@ -254,12 +199,7 @@
             color: var(--text-color);
         }
 
-        .input-row {
-            display: flex;
-            gap: 5px;
-            align-items: flex-end;
-        }
-
+        .input-row { display: flex; gap: 10px; align-items: flex-end; }
         .input-wrapper { flex: 1; }
         .input-wrapper small { display: block; margin-bottom: 2px; font-size: 0.75rem; color: var(--text-secondary); }
 
@@ -273,7 +213,6 @@
             box-sizing: border-box;
         }
         
-        /* Swap Button */
         .btn-icon {
             background: var(--bg-color);
             border: 1px solid var(--border-color);
@@ -298,12 +237,28 @@
             margin-top: 5px;
             display: inline-block;
         }
-        .btn-link:hover { color: var(--primary-hover); }
 
-        .rotate-inputs { display: flex; align-items: center; gap: 10px; }
-        input[type="range"] { flex-grow: 1; }
-        .rotate-val { width: 60px !important; }
+        /* B&W Toggle & Button Group */
+        .bw-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0 10px;
+            height: 38px; /* Match input height */
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .bw-toggle input { width: auto; margin: 0; cursor: pointer; }
+        .bw-toggle label { margin: 0; cursor: pointer; font-size: 0.9rem; font-weight: normal; }
 
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
         .btn {
             background-color: var(--primary-color);
             color: white;
@@ -312,12 +267,20 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1rem;
-            width: 100%;
+            flex: 1;
             transition: background 0.2s;
         }
         .btn:hover { background-color: var(--primary-hover); }
+        
+        .btn-secondary {
+            background-color: var(--secondary-bg);
+            font-size: 0.9rem;
+        }
+        .btn-secondary:hover { background-color: var(--secondary-hover); }
+        
         .btn:disabled { background-color: #ccc; cursor: not-allowed; }
 
+        /* Output & SEO Styles */
         #result-container {
             margin-top: 20px;
             display: none;
@@ -326,12 +289,23 @@
             width: 100%;
         }
         #result-image { border: 1px solid var(--border-color); margin-bottom: 10px; max-width: 100%; }
-        
-        /* Adjusted for Dark Mode readability */
         .success-msg { color: #28a745; font-weight: bold; margin-bottom: 10px; }
         .error-msg { color: #dc3545; font-size: 0.9rem; }
         body.dark-mode .success-msg { color: #4cd16e; }
         body.dark-mode .error-msg { color: #ff6b6b; }
+
+        .seo-section { max-width: 1000px; margin: 30px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        .seo-content { background: var(--container-bg); padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); line-height: 1.6; color: var(--text-secondary); }
+        .seo-content h1 { font-size: 1.6rem; color: var(--primary-color); margin-top: 0; }
+        .seo-content h2 { font-size: 1.3rem; margin-top: 20px; color: var(--text-color); }
+        .blog-sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .blog-card { background: var(--container-bg); padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .blog-card:hover { transform: translateY(-2px); }
+        .blog-card h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
+        .blog-card a { text-decoration: none; color: var(--text-color); }
+        .blog-card a:hover { color: var(--primary-color); }
+        .blog-meta { font-size: 0.8rem; color: var(--text-secondary); opacity: 0.8; display: block; margin-top: 5px; }
+        @media (max-width: 768px) { .seo-section { grid-template-columns: 1fr; } .button-group { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -343,66 +317,66 @@
 
 <main class="container">
     <header style="width:100%;">
-        <h2 class="app-title">🛂 Image Resize & Crop</h2>
+        <h2 class="app-title">🛂 Passport Photo Crop & Resize</h2>
         <p class="privacy-note">Privacy Note: All processing happens in your browser. Your images, your eyes only.</p>
     </header>
 
-    <!-- Image Editor Area -->
     <div class="editor-area">
         <div id="upload-placeholder" class="placeholder-text">Upload an image to start</div>
         <img id="image" src="" alt="">
     </div>
 
-    <!-- Controls Area -->
     <div class="controls-area">
-        
-        <!-- Upload -->
         <div class="control-group">
             <label for="inputImage">1. Upload Image</label>
             <input type="file" id="inputImage" accept="image/*">
         </div>
 
-        <!-- Rotation -->
         <div class="control-group">
-            <label>2. Rotate & Straighten</label>
-            <div class="rotate-inputs">
-                <input type="range" id="rotateSlider" min="-45" max="45" value="0" step="0.1" disabled aria-label="Rotation Slider">
-                <input type="number" id="rotateInput" class="rotate-val" value="0" min="-180" max="180" step="0.1" disabled aria-label="Rotation Degree Input">
+            <label>2. Rotate</label>
+            <div class="rotate-inputs" style="display:flex; gap:10px;">
+                <input type="range" id="rotateSlider" min="-45" max="45" value="0" step="0.1" disabled style="flex:1">
+                <input type="number" id="rotateInput" class="rotate-val" value="0" min="-180" max="180" step="0.1" disabled style="width:60px;">
             </div>
         </div>
 
-        <!-- Dimensions -->
         <div class="control-group">
             <label>3. Target Size (Pixels)</label>
             <div class="input-row">
                 <div class="input-wrapper">
                     <small>Width</small>
-                    <input type="number" id="targetWidth" value="150" aria-label="Target Width">
+                    <input type="number" id="targetWidth" value="150">
                 </div>
-                
-                <button id="btnSwap" class="btn-icon" title="Swap Width and Height" aria-label="Swap Dimensions">⇄</button>
-                
+                <button id="btnSwap" class="btn-icon" title="Swap Width and Height">⇄</button>
                 <div class="input-wrapper">
                     <small>Height</small>
-                    <input type="number" id="targetHeight" value="200" aria-label="Target Height">
+                    <input type="number" id="targetHeight" value="200">
                 </div>
             </div>
-            <!-- Original Size Option -->
             <button id="btnOriginal" class="btn-link" style="display:none;">Use Original Image Size</button>
         </div>
 
-        <!-- File Size Limit -->
         <div class="control-group">
             <label for="maxSizeKB">4. Max File Size (KB)</label>
-            <input type="number" id="maxSizeKB" value="100">
+            <div class="input-row">
+                <input type="number" id="maxSizeKB" value="100" style="flex:1;">
+                
+                <!-- NEW B&W Toggle -->
+                <div class="bw-toggle" title="Convert to Black & White">
+                    <input type="checkbox" id="cbBW">
+                    <label for="cbBW">B&W</label>
+                </div>
+            </div>
             <small style="color: var(--text-secondary)">Auto-compress to size reduce.</small>
         </div>
 
-        <!-- Action -->
-        <button id="btnCrop" class="btn" disabled>Crop & Download</button>
+        <!-- Button Group -->
+        <div class="button-group">
+            <button id="btnCrop" class="btn" disabled>Crop & Download</button>
+            <button id="btnNoCrop" class="btn btn-secondary" disabled>Resize & Compress (Full Image)</button>
+        </div>
     </div>
 
-    <!-- Output Area -->
     <div id="result-container">
         <h3>Result</h3>
         <div id="msgBox"></div>
@@ -412,7 +386,6 @@
     </div>
 </main>
 
-<!-- SEO & BLOG SECTION -->
 <div class="seo-section">
     <!-- Main SEO Text: Article Tag for Semantic SEO -->
     <article class="seo-content">
@@ -464,65 +437,37 @@
 <!-- Cropper.js Script -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-    // --- Dark Mode & Animation Logic ---
+    // --- Dark Mode Logic ---
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
-
-    // 1. Check saved preference
-    if(localStorage.getItem('theme') === 'dark') {
-        body.classList.add('dark-mode');
-    }
-
-    // 2. Trigger Attention Animation on Load (wait 1s)
-    setTimeout(() => {
-        // Only if user hasn't clicked it yet
-        if (!themeToggle.classList.contains('clicked')) {
-            themeToggle.classList.add('attention');
-        }
-    }, 1000);
-
-    // 3. Handle Click
+    if(localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
+    setTimeout(() => { if (!themeToggle.classList.contains('clicked')) themeToggle.classList.add('attention'); }, 1000);
     themeToggle.addEventListener('click', () => {
-        // Stop the attention wiggle
         themeToggle.classList.remove('attention');
-        
-        // Add the click spin
         themeToggle.classList.add('clicked');
-        
-        // Toggle Theme
         body.classList.toggle('dark-mode');
-        
-        // Save preference
-        if(body.classList.contains('dark-mode')) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-
-        // Remove click class after animation finishes (500ms)
-        setTimeout(() => {
-            themeToggle.classList.remove('clicked');
-        }, 500);
+        localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        setTimeout(() => themeToggle.classList.remove('clicked'), 500);
     });
 
-    // --- Cropper Tool Logic ---
+    // --- Main Logic ---
     const image = document.getElementById('image');
     const inputImage = document.getElementById('inputImage');
     const uploadPlaceholder = document.getElementById('upload-placeholder');
-    
-    // Controls
     const rotateSlider = document.getElementById('rotateSlider');
     const rotateInput = document.getElementById('rotateInput');
     const targetWidthInput = document.getElementById('targetWidth');
     const targetHeightInput = document.getElementById('targetHeight');
     const maxSizeInput = document.getElementById('maxSizeKB');
-    const btnCrop = document.getElementById('btnCrop');
+    const cbBW = document.getElementById('cbBW'); // B&W Checkbox
     
-    // New Buttons
+    // Buttons
+    const btnCrop = document.getElementById('btnCrop');
+    const btnNoCrop = document.getElementById('btnNoCrop'); // No Crop Button
     const btnSwap = document.getElementById('btnSwap');
     const btnOriginal = document.getElementById('btnOriginal');
 
-    // Result Elements
+    // Result
     const resultContainer = document.getElementById('result-container');
     const resultImg = document.getElementById('result-image');
     const downloadLink = document.getElementById('downloadLink');
@@ -532,14 +477,28 @@
     let originalWidth = 0;
     let originalHeight = 0;
 
-    // 1. Handle Image Upload
+    // --- Realtime Filter Logic ---
+    function updatePreviewFilter() {
+        const container = document.querySelector('.cropper-container');
+        if (container) {
+            if (cbBW.checked) {
+                container.classList.add('grayscale-filter');
+            } else {
+                container.classList.remove('grayscale-filter');
+            }
+        }
+    }
+    
+    // Listen for checkbox changes
+    cbBW.addEventListener('change', updatePreviewFilter);
+
+    // 1. Upload
     inputImage.addEventListener('change', function (e) {
         const files = e.target.files;
         if (files && files.length > 0) {
             const file = files[0];
             const url = URL.createObjectURL(file);
             
-            // Get original dimensions
             const tempImg = new Image();
             tempImg.src = url;
             tempImg.onload = function() {
@@ -549,99 +508,75 @@
                 btnOriginal.innerText = `Use Original (${originalWidth}x${originalHeight})`;
             };
 
-            if (cropper) {
-                cropper.destroy();
-                cropper = null;
-            }
+            if (cropper) { cropper.destroy(); cropper = null; }
 
             image.src = url;
             image.style.display = 'block';
             uploadPlaceholder.style.display = 'none';
 
             cropper = new Cropper(image, {
-                viewMode: 1,
-                dragMode: 'move',
-                autoCropArea: 0.8,
-                restore: false,
-                guides: true,
-                center: true,
-                highlight: false,
-                cropBoxMovable: true,
-                cropBoxResizable: true,
-                toggleDragModeOnDblclick: false,
+                viewMode: 1, dragMode: 'move', autoCropArea: 0.8, restore: false,
+                guides: true, center: true, highlight: false,
+                cropBoxMovable: true, cropBoxResizable: true, toggleDragModeOnDblclick: false,
                 ready: function () {
-                    rotateSlider.disabled = false;
-                    rotateInput.disabled = false;
-                    btnCrop.disabled = false;
+                    rotateSlider.disabled = false; rotateInput.disabled = false;
+                    btnCrop.disabled = false; btnNoCrop.disabled = false;
                     updateAspectRatio();
+                    updatePreviewFilter(); // Apply filter if checked before upload
                 },
             });
-            
-            rotateSlider.value = 0;
-            rotateInput.value = 0;
+            rotateSlider.value = 0; rotateInput.value = 0;
             resultContainer.style.display = 'none';
         }
     });
 
-    // 2. Handle Rotation
-    function handleRotation(value) {
-        if (!cropper) return;
-        cropper.rotateTo(parseFloat(value));
-    }
-    rotateSlider.addEventListener('input', (e) => {
-        rotateInput.value = e.target.value;
-        handleRotation(e.target.value);
-    });
-    rotateInput.addEventListener('input', (e) => {
-        rotateSlider.value = e.target.value;
-        handleRotation(e.target.value);
-    });
+    // 2. Rotation & Sizing
+    function handleRotation(value) { if (cropper) cropper.rotateTo(parseFloat(value)); }
+    rotateSlider.addEventListener('input', (e) => { rotateInput.value = e.target.value; handleRotation(e.target.value); });
+    rotateInput.addEventListener('input', (e) => { rotateSlider.value = e.target.value; handleRotation(e.target.value); });
 
-    // 3. Size Controls
     function updateAspectRatio() {
         if(!cropper) return;
         const w = parseInt(targetWidthInput.value) || 1;
         const h = parseInt(targetHeightInput.value) || 1;
         cropper.setAspectRatio(w / h);
     }
-
     targetWidthInput.addEventListener('change', updateAspectRatio);
     targetHeightInput.addEventListener('change', updateAspectRatio);
-
     btnSwap.addEventListener('click', function() {
-        const currentW = targetWidthInput.value;
-        const currentH = targetHeightInput.value;
-        targetWidthInput.value = currentH;
-        targetHeightInput.value = currentW;
+        const temp = targetWidthInput.value;
+        targetWidthInput.value = targetHeightInput.value;
+        targetHeightInput.value = temp;
         updateAspectRatio();
     });
-
     btnOriginal.addEventListener('click', function() {
-        if(originalWidth > 0 && originalHeight > 0) {
-            targetWidthInput.value = originalWidth;
-            targetHeightInput.value = originalHeight;
-            updateAspectRatio();
-        }
+        if(originalWidth > 0) { targetWidthInput.value = originalWidth; targetHeightInput.value = originalHeight; updateAspectRatio(); }
     });
 
-    // 4. Crop, Resize, and Compress
-    btnCrop.addEventListener('click', function () {
-        if (!cropper) return;
+    // --- 3. Processing Helper Functions ---
 
-        const width = parseInt(targetWidthInput.value);
-        const height = parseInt(targetHeightInput.value);
-        const maxKB = parseInt(maxSizeInput.value);
+    // Apply Grayscale Filter to Canvas Pixel Data (For Export)
+    function applyBlackAndWhite(canvas) {
+        const ctx = canvas.getContext('2d');
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+            data[i] = avg;     // Red
+            data[i + 1] = avg; // Green
+            data[i + 2] = avg; // Blue
+        }
+        ctx.putImageData(imgData, 0, 0);
+    }
 
-        const canvas = cropper.getCroppedCanvas({
-            width: width,
-            height: height,
-            fillColor: '#fff',
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: 'high',
-        });
+    // Compression Loop & Display Result
+    function compressAndDisplay(canvas, width, height, maxKB) {
+        // Apply B&W Pixel manipulation if checked
+        if (cbBW.checked) {
+            applyBlackAndWhite(canvas);
+        }
 
         let quality = 0.95;
-        
         const processBlob = (callback) => {
             canvas.toBlob((blob) => {
                 const sizeKB = blob.size / 1024;
@@ -654,7 +589,6 @@
             }, 'image/jpeg', quality);
         };
 
-
         processBlob((blob, finalSizeKB) => {
             const url = URL.createObjectURL(blob);
             resultImg.src = url;
@@ -662,7 +596,6 @@
             downloadLink.download = `photo_${width}x${height}.jpg`;
             
             resultContainer.style.display = 'block';
-            
             if (finalSizeKB > maxKB) {
                 msgBox.innerHTML = `<div class="error-msg">Warning: Could not compress below ${maxKB}KB. Current: ${finalSizeKB.toFixed(2)}KB</div>`;
             } else {
@@ -670,7 +603,41 @@
             }
             resultContainer.scrollIntoView({ behavior: 'smooth' });
         });
+    }
+
+    // 4. Button Action: Crop & Download
+    btnCrop.addEventListener('click', function () {
+        if (!cropper) return;
+        const width = parseInt(targetWidthInput.value);
+        const height = parseInt(targetHeightInput.value);
+        
+        const canvas = cropper.getCroppedCanvas({
+            width: width, height: height,
+            fillColor: '#fff', imageSmoothingEnabled: true, imageSmoothingQuality: 'high',
+        });
+        
+        compressAndDisplay(canvas, width, height, parseInt(maxSizeInput.value));
     });
+
+    // 5. Button Action: No Crop (Resize & Compress Full Image)
+    btnNoCrop.addEventListener('click', function() {
+        if (!cropper) return;
+        const width = parseInt(targetWidthInput.value);
+        const height = parseInt(targetHeightInput.value);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        // Draw original image resized
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(image, 0, 0, width, height);
+
+        compressAndDisplay(canvas, width, height, parseInt(maxSizeInput.value));
+    });
+
 </script>
 </body>
 </html>
